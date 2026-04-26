@@ -1,0 +1,19 @@
+---
+interface Props {
+  heading: string;
+  body: string;
+  principles?: string[];
+}
+
+const { heading, body, principles = [] } = Astro.props;
+---
+
+<section aria-labelledby="principles-title">
+  <h2 id="principles-title">{heading}</h2>
+  <p>{body}</p>
+  {principles.length > 0 && (
+    <ul>
+      {principles.map((item: string) => <li>{item}</li>)}
+    </ul>
+  )}
+</section>

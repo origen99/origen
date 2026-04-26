@@ -1,0 +1,39 @@
+name: Docs Quality
+
+on:
+  pull_request:
+    paths:
+      - "web/**"
+      - "docs/**"
+      - "specs/**"
+      - ".github/ISSUE_TEMPLATE/**"
+      - ".markdownlint.yaml"
+  workflow_dispatch:
+
+jobs:
+  docs-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        working-directory: web
+        run: npm install
+
+      - name: Markdown lint
+        run: npx markdownlint "**/*.md" --config .markdownlint.yaml
+
+      - name: Link check (offline)
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --offline --no-progress "specs/**/*.md" "docs/**/*.md"
+
+      - name: Build site
+        working-directory: web
+        run: npm run build

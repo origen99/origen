@@ -1,0 +1,18 @@
+---
+interface Props {
+  heading: string;
+  body: string;
+  label?: string;
+  target?: string;
+}
+
+const { heading, body, label = "Proponer por Issue", target = "/contribuir" } = Astro.props;
+---
+
+<section aria-labelledby="contribution-title" id="contribuir">
+  <h2 id="contribution-title">{heading}</h2>
+  <p>{body}</p>
+  <p>
+    <a href={target}>{label}</a>
+  </p>
+</section>

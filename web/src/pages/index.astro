@@ -1,0 +1,91 @@
+---
+import { getEntry } from "astro:content";
+import HomeHero from "../components/HomeHero.astro";
+import PurposeBlock from "../components/PurposeBlock.astro";
+import PrinciplesBlock from "../components/PrinciplesBlock.astro";
+import HomeSectionNav from "../components/HomeSectionNav.astro";
+import ExploreCTA from "../components/ExploreCTA.astro";
+import ContributionCTA from "../components/ContributionCTA.astro";
+
+const home = await getEntry("home", "index");
+
+if (!home) {
+  throw new Error("No se encontro contenido para la Home");
+}
+
+const pageTitle = "Origen | Volver a la raiz de las ideas";
+const canonicalUrl = "https://origen.dev/";
+const sections = [...home.data.sections].sort((a, b) => a.order - b.order);
+const identidad = sections.find((s) => s.section_type === "identidad");
+const proposito = sections.find((s) => s.section_type === "proposito");
+const principios = sections.find((s) => s.section_type === "principios");
+const explorar = sections.find((s) => s.section_type === "explorar");
+const contribuir = sections.find((s) => s.section_type === "contribuir");
+const navItems = sections.map((s) => ({
+  id: s.section_type,
+  label: s.heading
+}));
+---
+
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={home.data.purpose_summary} />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={home.data.purpose_summary} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={home.data.purpose_summary} />
+  </head>
+  <body>
+    <main>
+      <HomeSectionNav items={navItems} />
+      {identidad && (
+        <section id="identidad">
+          <HomeHero title={home.data.title} body={identidad.body} />
+        </section>
+      )}
+      {proposito && (
+        <section id="proposito">
+          <PurposeBlock heading={proposito.heading} body={proposito.body} />
+        </section>
+      )}
+      {principios && (
+        <section id="principios">
+          <PrinciplesBlock
+            heading={principios.heading}
+            body={principios.body}
+            principles={[
+              "Ideas antes que identidades.",
+              "Preguntas antes que consignas.",
+              "Razonamiento explicito antes que respuestas prefabricadas."
+            ]}
+          />
+        </section>
+      )}
+      {explorar && (
+        <ExploreCTA
+          heading={explorar.heading}
+          body={explorar.body}
+          label={explorar.cta_label}
+          target={explorar.cta_target}
+        />
+      )}
+      {contribuir && (
+        <ContributionCTA
+          heading={contribuir.heading}
+          body={contribuir.body}
+          label={contribuir.cta_label}
+          target={contribuir.cta_target}
+        />
+      )}
+    </main>
+  </body>
+</html>

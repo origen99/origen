@@ -1,0 +1,63 @@
+name: Propuesta de documentacion
+description: Proponer nuevo contenido o mejoras editoriales para Origen (Issue-first)
+title: "[DOC] "
+labels:
+  - docs
+body:
+  - type: input
+    id: title
+    attributes:
+      label: Titulo corto
+      description: Resume tu propuesta en una frase.
+      placeholder: "Ejemplo: Mejorar bloque de principios en Home"
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem_statement
+    attributes:
+      label: Problema a resolver
+      description: Que problema concreto ves en el contenido actual.
+      placeholder: "Que falta, que confunde o que puede mejorar"
+    validations:
+      required: true
+
+  - type: textarea
+    id: argument_summary
+    attributes:
+      label: Argumento principal
+      description: Explica por que tu propuesta mejora claridad, rigor o neutralidad.
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence_or_sources
+    attributes:
+      label: Evidencia o fuentes
+      description: Incluye al menos una fuente, ejemplo o evidencia.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: content_type
+    attributes:
+      label: Tipo de aporte
+      options:
+        - new-doc
+        - edit-doc
+        - correction
+    validations:
+      required: true
+
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Alcance
+      options:
+        - home
+        - tutorials
+        - how-to
+        - reference
+        - explanation
+    validations:
+      required: true

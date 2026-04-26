@@ -1,0 +1,18 @@
+---
+interface Props {
+  heading: string;
+  body: string;
+  label?: string;
+  target?: string;
+}
+
+const { heading, body, label = "Explorar", target = "/docs" } = Astro.props;
+---
+
+<section aria-labelledby="explore-title" id="explorar">
+  <h2 id="explore-title">{heading}</h2>
+  <p>{body}</p>
+  <p>
+    <a href={target}>{label}</a>
+  </p>
+</section>
